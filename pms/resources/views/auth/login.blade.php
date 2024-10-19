@@ -17,13 +17,13 @@
                             <p class="sign-in-label">Sign In</p>
                         </div>
                         <div class="login-field-form-group my-1">
-                            <input type="text" class="form-control login-field" placeholder="Username">
+                            <input type="text" class="form-control login-field" placeholder="Username" id="username">
                             <div class="icon-container">
                                 <i class="fas fa-user"></i>
                             </div>
                         </div>
                         <div class="login-field-form-group my-1">
-                            <input type="password" class="form-control login-field" placeholder="Password">
+                            <input type="password" class="form-control login-field" placeholder="Password" id="password">
                             <div class="icon-container">
                                 <i class="fas fa-lock"></i>
                             </div>
