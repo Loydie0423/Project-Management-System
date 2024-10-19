@@ -49,6 +49,14 @@ function signIn(){
                 $("#password").addClass('is-invalid');
                 $('.password-error-container').find('span').text(message);
             }
+
+            if(status == 500){
+                Swal.fire({
+                    title : 'Server Error',
+                    text: message,
+                    icon : 'error'
+                });
+            }
         }
     });
 }

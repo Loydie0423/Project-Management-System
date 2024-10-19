@@ -14,6 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{ asset('plugins/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/auth/auth.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalert2.11.14.3.js') }}"></script>
 </head>
 
 <body>

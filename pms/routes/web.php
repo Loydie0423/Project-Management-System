@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\SampleController;
@@ -24,5 +25,7 @@ Route::get('/signin', [SignInController::class, 'index'])->name('signin.index');
 Route::post('/signin/submit', [SignInController::class, 'submit'])->name('signin.submit');
 Route::get('/password-reset/send-reset-link', [ResetPasswordController::class, 'index'])->name('password-reset.send-reset-link.index');
 Route::get('/password-reset', [ResetPasswordController::class, 'passwordReset'])->name('password-reset.index');
+
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 Route::get('sample', [SampleController::class, 'index'])->name('sample');
