@@ -36,3 +36,113 @@
     font-weight: 600;
     color: #007BFF;
 }
+
+.small-card-container {
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 130px;
+    cursor: pointer;
+}
+
+.small-card-container .sm-card-left-side .sm-card-left-side-container{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin: 0;
+    line-height: 40px;
+}
+
+.small-card-container .sm-card-left-side .sm-card-left-side-container .sm-card-count{
+    margin: 0;
+    font-size: 55px;
+    font-weight: 600;
+
+}
+.small-card-container .sm-card-left-side .sm-card-left-side-container .sm-card-title{
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.small-card-container .sm-card-right-side i{
+    font-size: 55px;
+}
+
+.card .card-header .dashboard-sm-card-title{
+    color: #8D8989;
+    font-weight: 600;
+}
+
+.pill-count{
+    font-size: 15px;
+}
+
+.card-counter-body{
+    height: 68px;
+}
+
+.card .card-header span{
+    color: #8D8989;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+div.dataTables_wrapper div.dataTables_length label{
+    font-weight: 400;
+    color: #8D8989;
+}
+
+div.dataTables_wrapper div.dataTables_length select{
+    font-weight: 400;
+    color: #8D8989;
+    border: 1px solid #8D8989;
+}
+
+div.dataTables_wrapper div.dataTables_filter label{
+    font-weight: 400;
+    color: #8D8989;
+}
+
+div.dataTables_wrapper div.dataTables_filter input{
+    border: 1px solid #8D8989;
+    color: #000;
+    font-weight: 400;
+    height: 38px;
+    padding-left: 8px;
+    outline: none;
+}
+.table.dataTable tbody td{
+    color: #8D8989;
+    font-weight: 500;
+}
+
+option{
+    color: #8D8989;
+    font-weight: 400;
+}
+
+div.dataTables_wrapper div.dataTables_info{
+    color: #8D8989;
+    font-weight: 400;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+    color: #8D8989;
+    font-weight: 400;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    font-weight: 400;
+    color: #8D8989;
+}
+
+table thead tr{
+    background-color: #333;
+    color: #fff;
+}
+
+

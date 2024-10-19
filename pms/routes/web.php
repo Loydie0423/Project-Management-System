@@ -27,5 +27,9 @@ Route::get('/password-reset/send-reset-link', [ResetPasswordController::class, '
 Route::get('/password-reset', [ResetPasswordController::class, 'passwordReset'])->name('password-reset.index');
 
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('datatable/project-summary', [DashboardController::class, 'projectSummaryDataTable'])->name('admin.datatable.projectSummary');
+Route::get('datatable/task-summary', [DashboardController::class, 'taskSummaryDataTable'])->name('admin.datatable.taskSummary');
+Route::get('datatable/logs', [DashboardController::class, 'logsDataTable'])->name('admin.datatable.logs');
+
 
 Route::get('sample', [SampleController::class, 'index'])->name('sample');
