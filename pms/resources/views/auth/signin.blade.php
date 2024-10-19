@@ -22,11 +22,17 @@
                                 <i class="fas fa-user"></i>
                             </div>
                         </div>
+                        <div class="username-error-container">
+                            <span class="text-danger username-error"></span>
+                        </div>
                         <div class="login-field-form-group my-1">
                             <input type="password" class="form-control login-field" placeholder="Password" id="password">
                             <div class="icon-container">
                                 <i class="fas fa-lock"></i>
                             </div>
+                        </div>
+                        <div class="password-error-container">
+                            <span class="text-danger password-error"></span>
                         </div>
                         <div class="login-other-function my-1">
                             <div class="remeber-me-container pl-3">
@@ -38,7 +44,7 @@
                         </div>
 
                         <div class="login-button-container mt-3">
-                            <button class="btn btn-primary login-btn">Sign In</button>
+                            <button class="btn btn-primary login-btn" onclick="signIn()">Sign In</button>
                         </div>
                     </div>
                 </div>

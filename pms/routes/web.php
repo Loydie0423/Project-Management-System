@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/signin', [SignInController::class, 'index'])->name('signin.index');
+Route::post('/signin/submit', [SignInController::class, 'submit'])->name('signin.submit');
 Route::get('/password-reset/send-reset-link', [ResetPasswordController::class, 'index'])->name('password-reset.send-reset-link.index');
 Route::get('/password-reset', [ResetPasswordController::class, 'passwordReset'])->name('password-reset.index');
 

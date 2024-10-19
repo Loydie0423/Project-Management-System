@@ -89,6 +89,34 @@
     font-size: 25px;
 }
 
+.username-error-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-left: 120px;
+}
+
+.username-error-container span{
+    color: #DC3545;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.password-error-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-left: 120px;
+}
+
+.password-error-container span{
+    color: #DC3545;
+    font-size: 14px;
+    font-weight: 400;
+}
+
 .login-other-function{
     display: flex;
     align-items: center;
