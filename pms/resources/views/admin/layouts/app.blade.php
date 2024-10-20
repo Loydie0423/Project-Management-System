@@ -45,11 +45,15 @@
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <i class="fas fa-cog mr-2"></i> Account Settings
+                                <button class="btn font-weight-bold"><i class="fas fa-cog mr-2"></i> Account
+                                    Settings
+                                </button>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-sign-out mr-2"></i> Logout
+                            <a class="dropdown-item">
+                                <button class="btn font-weight-bold" id="signout"><i class="fas fa-sign-out mr-2"></i>
+                                    Logout
+                                </button>
                             </a>
                         </div>
                     </li>
@@ -80,6 +84,45 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <script src="{{ asset('plugins/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('js/adminlte.js') }}"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#signout').click(function() {
+                    let url = '/signout';
+                    let token = $("meta[title='token']").attr('content');
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': token
+                        },
+                        success: function(response) {
+                            let message = response.message;
+
+                            Swal.fire({
+                                title: message,
+                                text: '',
+                                icon: 'success'
+                            });
+
+                            window.location = '/signin';
+                        },
+                        error: function(error) {
+                            let status = error.status ?? null;
+
+                            if (status == 500) {
+                                Swal.fire({
+                                    title: 'Server Error',
+                                    text: message,
+                                    icon: 'error'
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 
 </body>

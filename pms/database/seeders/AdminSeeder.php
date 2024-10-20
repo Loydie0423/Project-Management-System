@@ -15,6 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
+            'role_id' => 2,
             'first_name' => 'John',
             'last_name' => 'Doe',
             'gender' => 'Male',

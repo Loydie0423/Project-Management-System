@@ -43,5 +43,16 @@ class JsonResponse
 
         return response()->json($response, $statusCode);
     }
+
+    public function successJsonResponse(string $message = 'OK', bool $success = true, int $statusCode = 200, array $data = [])
+    {
+        $response = [
+            'success' => $success,
+            'message' => $message,
+            'data' => $data
+        ];
+
+        return response()->json($response, $statusCode);
+    }
 }
 ?>

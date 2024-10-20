@@ -49,7 +49,9 @@ class SignInController
                     return $this->jsonResponse->invalidCredentialsJsonResponse(message: 'Incorrect Password');
                 }
 
-                return response()->json('Success Login');
+                $userType = (auth()->user()->role_id == "1" || auth()->user()->role_id == 1) ? 'User' : 'Admin';
+
+                return $this->jsonResponse->successJsonResponse(message: 'Success', data: ['userType' => $userType]);
             }
         } catch (\Throwable $th) {
             return $this->jsonResponse->serverErrorJsonResponse(message: $th->getMessage());

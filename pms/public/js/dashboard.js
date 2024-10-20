@@ -3,7 +3,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         paging: true,
-        ajax: "/datatable/project-summary",
+        ajax: "/admin/datatable/project-summary",
         columns: [{
                 data: 'project',
                 name: 'project',
@@ -42,7 +42,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         paging: true,
-        ajax: "/datatable/task-summary",
+        ajax: "/admin/datatable/task-summary",
         columns: [{
                 data: 'task',
                 name: 'task',
@@ -76,7 +76,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         paging: true,
-        ajax: "/datatable/logs",
+        ajax: "/admin/datatable/logs",
         columns: [{
                 data: 'user',
                 name: 'user',

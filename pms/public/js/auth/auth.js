@@ -1,6 +1,6 @@
 
+
 function signIn(){
-    console.log("clicked");
     let userName = $('#username').val();
     let password = $('#password').val();
     let token = $("meta[title='token']").attr('content');
@@ -22,7 +22,23 @@ function signIn(){
             'X-CSRF-TOKEN' : token
         },
         success : function(response) {
-            console.log(response);
+            let userType = response.data.userType;
+            let message = response.message;
+
+            Swal.fire({
+                title : message,
+                text : '',
+                icon : 'success'
+            });
+
+            if(userType && userType == 'Admin')
+            {
+                window.location = '/admin/dashboard';
+                return;
+            }
+
+            window.location = '/dashboard';
+            return;
         },
         error : function(error){
 
@@ -60,6 +76,5 @@ function signIn(){
         }
     });
 }
-
 
 
