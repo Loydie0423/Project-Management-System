@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SignInController;
@@ -31,10 +32,20 @@ Route::get('/password-reset', [ResetPasswordController::class, 'passwordReset'])
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+
+
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/datatable/project-summary', [AdminDashboardController::class, 'projectSummaryDataTable'])->name('admin.datatable.projectSummary');
         Route::get('/datatable/task-summary', [AdminDashboardController::class, 'taskSummaryDataTable'])->name('admin.datatable.taskSummary');
         Route::get('/datatable/logs', [AdminDashboardController::class, 'logsDataTable'])->name('admin.datatable.logs');
+
+        Route::get('/category', [CategoryController::class, 'index'])->name('admin.category.index');
+        Route::get('/datatable/category', [CategoryController::class, 'categoryDataTable'])->name('admin.datatable.category');
+        Route::get('/category/add', [CategoryController::class, 'create'])->name('admin.category.create');
+        Route::post('/category/store', [CategoryController::class, 'store'])->name('admin.category.store');
+        Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
+        Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('admin.category.update');
+
     });
 
     Route::group(['middleware' => 'user'], function () {

@@ -145,4 +145,25 @@ table thead tr{
     color: #fff;
 }
 
+textarea{
+    resize: none;
+}
+label{
+    color: #585555;
+}
+
+.text-danger{
+    color: #DC3545;
+    font-weight: 400;
+}
+
+.alert-close-icon{
+    color: #fff;
+    font-weight: 400;
+}
+
+.close{
+    border: none;
+    outline: none;
+}
 

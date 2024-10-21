@@ -239,5 +239,5 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/admin/dashboard.js') }}"></script>
 @endsection

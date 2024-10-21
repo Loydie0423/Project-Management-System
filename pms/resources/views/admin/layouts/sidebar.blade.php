@@ -22,9 +22,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.category.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-list text-light"></i>
-                        <p class="text-light font-weight-bold">Categories</p>
+                        <p class="text-light font-weight-bold">Category</p>
                     </a>
                 </li>
 
