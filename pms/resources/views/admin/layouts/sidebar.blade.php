@@ -15,14 +15,16 @@
                 data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt text-light"></i>
                         <p class="text-light font-weight-bold">Dashboard</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.category.index') }}" class="nav-link">
+                    <a href="{{ route('admin.category.index') }}"
+                        class="nav-link  {{ Route::is('admin.category.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list text-light"></i>
                         <p class="text-light font-weight-bold">Category</p>
                     </a>
@@ -43,7 +45,7 @@
                 </li>
 
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link text-light">
                         <i class="nav-icon fas fa-chart-simple"></i>
                         <p class="text-light font-weight-bold">
                             Reports
@@ -52,7 +54,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link active">
+                            <a href="./index.html" class="nav-link ">
                                 <i class="far fa-circle nav-icon text-light"></i>
                                 <p class="text-light font-weight-bold">Item 1</p>
                             </a>
@@ -67,7 +69,7 @@
                 </li>
 
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link text-light">
                         <i class="nav-icon fas fa-gears"></i>
                         <p class="text-light font-weight-bold">
                             Settings
@@ -76,7 +78,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link active">
+                            <a href="./index.html" class="nav-link">
                                 <i class="far fa-circle nav-icon text-light"></i>
                                 <p class="text-light font-weight-bold">Manage User</p>
                             </a>

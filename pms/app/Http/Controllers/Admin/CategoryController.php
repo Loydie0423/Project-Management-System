@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\LogsHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
@@ -12,6 +13,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
+
+    private LogsHelper $logsHelper;
+
+    public function __construct()
+    {
+        $this->logsHelper = new LogsHelper();
+    }
+
     public function index()
     {
         return view('admin.category.index');
@@ -41,10 +50,18 @@ class CategoryController extends Controller
     {
         try {
             DB::beginTransaction();
-            ProjectCategory::create([
+            $projectCategory = ProjectCategory::create([
                 'name' => $request->category_name,
                 'description' => $request->description
             ]);
+            $logs = [
+                'user_id' => auth()->user()->id,
+                'module_name' => 'Admin Category',
+                'description' => 'Added new Category [Name: ' . $projectCategory->name . ']',
+                'ip_address' => $request->ip(),
+                'date_time' => now()
+            ];
+            $this->logsHelper->insertToLogs($logs['user_id'], $logs['module_name'], $logs['description'], request()->ip(), $logs['date_time']);
             DB::commit();
             return redirect()->route('admin.category.index')->with('success', 'Project Category Added Successfully');
         } catch (\Throwable $th) {
@@ -62,10 +79,21 @@ class CategoryController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $category->update([
                 'name' => $request->category_name,
                 'description' => $request->description
             ]);
+
+            $logs = [
+                'user_id' => auth()->user()->id,
+                'module_name' => 'Admin Category',
+                'description' => 'Updated Category',
+                'ip_address' => $request->ip(),
+                'date_time' => now()
+            ];
+            $this->logsHelper->insertToLogs($logs['user_id'], $logs['module_name'], $logs['description'], request()->ip(), $logs['date_time']);
+
             DB::commit();
             return redirect()->route('admin.category.index')->with('success', 'Project Category Updated Successfully');
         } catch (\Throwable $th) {

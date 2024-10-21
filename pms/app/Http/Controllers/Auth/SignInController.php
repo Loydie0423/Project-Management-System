@@ -1,18 +1,27 @@
 <?php
 namespace App\Http\Controllers\Auth;
+use App\Helper\LogsHelper;
 use App\Http\HttpResponse\JsonResponse;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\Log;
 
 class SignInController
 {
     private JsonResponse $jsonResponse;
+    private LogsHelper $logsHelper;
+
+    private Carbon $dateNow;
 
     public function __construct()
     {
         $this->jsonResponse = new JsonResponse();
+        $this->logsHelper = new LogsHelper();
+        $this->dateNow = now();
+
     }
 
     public function index()
@@ -50,6 +59,16 @@ class SignInController
                 }
 
                 $userType = (auth()->user()->role_id == "1" || auth()->user()->role_id == 1) ? 'User' : 'Admin';
+
+                $logs = [
+                    'user_id' => auth()->user()->id,
+                    'module_name' => 'Authentication',
+                    'description' => 'Logged in [Date&Time: ' . now() . ']',
+                    'ip_address' => $request->ip(),
+                    'date_time' => now()
+                ];
+
+                $this->logsHelper->insertToLogs($logs['user_id'], $logs['module_name'], $logs['description'], request()->ip(), $logs['date_time']);
 
                 return $this->jsonResponse->successJsonResponse(message: 'Success', data: ['userType' => $userType]);
             }

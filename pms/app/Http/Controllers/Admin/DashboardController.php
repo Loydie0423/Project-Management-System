@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Log as LogModel;
 
 class DashboardController extends Controller
 {
@@ -201,98 +202,18 @@ class DashboardController extends Controller
     public function logsDataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = [
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-                [
-                    'user' => 'John Doe',
-                    'role' => 'Admin',
-                    'module' => 'Category',
-                    'description' => 'Add new category [Category Name: Technologies]',
-                    'ip_address' => '192.168.1.1',
-                    'date_time' => date('Y-m-d h:i:s')
-                ],
-            ];
 
-            return DataTables::of(collect($data))->addIndexColumn()->make(true);
+            $data = LogModel::with('user')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user', function ($data) {
+                    return $data->user->first_name . " " . $data->user->last_name;
+                })
+                ->addColumn('user_role', function ($data) {
+                    return $data->user->role->name;
+                })
+                ->rawColumns(['user' . 'user_role'])
+                ->make(true);
         }
     }
 }

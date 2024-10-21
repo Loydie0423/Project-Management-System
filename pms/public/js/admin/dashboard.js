@@ -83,13 +83,13 @@ $(document).ready(function() {
                 orderable: false,
             },
             {
-                data: 'role',
-                name: 'role',
+                data: 'user_role',
+                name: 'user_role',
                 orderable: false,
             },
             {
-                data: 'module',
-                name: 'module',
+                data: 'module_name',
+                name: 'module_name',
                 orderable: false,
             },
             {
@@ -108,6 +108,11 @@ $(document).ready(function() {
                 orderable: false,
             },
         ],
-
+        columnDefs : [
+            {
+                targets : [1,2,4,5],
+                className : 'text-center'
+            }
+        ]
     });
 });
