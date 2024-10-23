@@ -304,6 +304,12 @@ $(document).ready(function() {
                 $("#selected-collaborator-card").removeClass('border-danger');
                 $("#selectedCollaboratorErrContainer").text("");
             }
+
+            if(item.field = "resources"){
+                $("#resources-card").removeClass('border');
+                $("#resources-card").removeClass('border-danger');
+                $("#resourcesErrContainer").text("");
+            }
         });
 
         requiredFields.forEach((item) => {
