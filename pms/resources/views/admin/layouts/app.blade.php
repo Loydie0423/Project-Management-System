@@ -14,9 +14,11 @@
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pms.css') }}">
     <script src="{{ asset('plugins/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2.11.14.3.js') }}"></script>
+    <script src="{{ asset('plugins/select2.min.js') }}"></script>
 </head>
 
 <body>

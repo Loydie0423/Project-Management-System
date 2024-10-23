@@ -89,7 +89,7 @@
 .card .card-header span{
     color: #8D8989;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 div.dataTables_wrapper div.dataTables_length label{
@@ -149,7 +149,7 @@ textarea{
     resize: none;
 }
 label{
-    color: #585555;
+    color: #8D8989;
 }
 
 .text-danger{
@@ -167,3 +167,31 @@ label{
     outline: none;
 }
 
+.select2-container{
+    height: 37.99px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.select2-container--default .select2-selection--single{
+    height: 37.99px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered, .select2-container--default .select2-search--dropdown .select2-search__field, .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable, .select2-results__option{
+    font-weight: 400;
+}
+
+#selected-collaborator-card{
+    min-height : 287.84px;
+}
+
+.btn{
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn span{
+    color: #fff;
+    font-weight: 600;
+}

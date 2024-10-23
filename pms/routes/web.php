@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignoutController;
@@ -46,6 +47,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
         Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('admin.category.update');
 
+        Route::get('/project', [ProjectController::class, 'index'])->name('admin.project.index');
+        Route::get('/datatable/project', [ProjectController::class, 'projectDataTable'])->name('admin.datatable.project');
+        Route::get('/project/add', [ProjectController::class, 'create'])->name('admin.project.create');
+        Route::get('/datatable/collaborator/selection', [ProjectController::class, 'collaboratorSelectionDataTable'])->name('admin.datatable.collaborator.selection');
     });
 
     Route::group(['middleware' => 'user'], function () {
