@@ -32,49 +32,60 @@
                         </div>
                         <div class="card-body">
                             <div class="row my-1">
-                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>Category</label>
-                                    <select name="category_id" id="category_id" class="form-control">
-                                        @foreach ($categories as $categoryId => $categoryName)
+                                    <select name="category_id" id="category_id" class="form-control"
+                                        onchange="generateProjectCode()">
+                                        <option disabled selected>--SELECT CATEGORY--</option>
+                                        @forelse ($categories as $categoryId => $categoryName)
                                             <option value="{{ $categoryId }}">{{ $categoryName }}</option>
-                                        @endforeach
+                                        @empty
+                                            <option disabled>No Category Found</option>
+                                        @endforelse
                                     </select>
+                                    <span class="text-danger"></span>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>Project Code</label>
                                     <input type="text" name="code" id="projectCode" class="form-control" readonly>
+                                    <span class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4 col-lg-4 col-sm-6">
+                                <div class="col col-md-4 col-lg-4 col-sm-6">
                                     <label>Title</label>
                                     <input type="text" name="title" id="title" class="form-control">
+                                    <span class="text-danger"></span>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>Start Date and Time</label>
                                     <input type="date" name="start_date_time" id="start_date_time" class="form-control">
+                                    <span class="text-danger"></span>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>End Date and Time [<span
                                             class="text-info font-weight-bold">Estimated</span>]</label>
-                                    <input type="date" name="start_date_time" id="start_date_time" class="form-control">
+                                    <input type="date" name="start_date_time" id="end_date_time" class="form-control">
+                                    <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="row my-2">
-                                <div class="col-12">
+                                <div class="col col-12">
                                     <label>Description</label>
-                                    <textarea name="description" id="description" cols="3" rows="3" class="form-control"></textarea>
+                                    <textarea name="description" id="project_description" cols="3" rows="3" class="form-control"></textarea>
+                                    <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="row my-2">
-                                <div class="col-12">
+                                <div class="col col-12">
                                     <label>Readme</label>
                                     <textarea name="readme" id="readme" cols="3" rows="3" class="form-control"></textarea>
+                                    <span class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="card px-2 py-2">
-                        <div class="card-header">
+                        <div class="card-header d-flex align-items-center justify-content-between w-100">
                             <span>Collaborators</span>
                         </div>
                         <div class="card-body">
@@ -119,6 +130,8 @@
                                                 </thead>
                                                 <tbody id="selectedCollaboratorsTableBody"></tbody>
                                             </table>
+                                            <span class="my-1 text-danger font-weight-normal"
+                                                id="selectedCollaboratorErrContainer"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -127,50 +140,55 @@
                     </div>
 
                     <div class="card px-2 py-2">
-                        <div class="card-header">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <span>Resources</span>
                         </div>
                         <div class="card-body">
                             <div class="row my-2">
-                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>Type</label>
-                                    <select name="resources_type" id="resources_type" class="form-control">
+                                    <select name="resources_type" id="resourceType" class="form-control">
                                         <option value="Image">Image</option>
                                         <option value="Link">Link</option>
                                     </select>
+                                    <span class="text-danger"></span>
                                 </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12">
+                                <div class="col col-md-6 col-lg-6 col-sm-12">
                                     <label>Title</label>
-                                    <input type="text" name="title" class="form-control">
+                                    <input type="text" name="title" id="resourceTitle" class="form-control">
+                                    <span class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-6">
                                     <div class="row" id="addProjectUploadImageContainer">
-                                        <div class="col-12">
+                                        <div class="col col-12">
                                             <label>Upload Image</label>
-                                            <input type="file" name="image" class="form-control">
+                                            <input type="file" name="image" id="resourceImage"
+                                                class="form-control">
+                                            <span class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="row d-none" id="addProjectLinkContainer">
-                                        <div class="col-12">
+                                        <div class="col col-12">
                                             <label>Link</label>
-                                            <input type="text" name="link" class="form-control">
+                                            <input type="text" name="link" id="resourceLink" class="form-control">
+                                            <span class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row my-2">
-                                <div class="col-12">
+                                <div class="col col-12">
                                     <label>Description</label>
-                                    <textarea name="resources_description" id="resources_description" cols="3" rows="3"
-                                        class="form-control"></textarea>
+                                    <textarea name="resources_description" id="resourceDescription" cols="3" rows="3" class="form-control"></textarea>
+                                    <span class="text-danger"></span>
                                 </div>
 
                                 <div class="col-12 mt-2">
                                     <div class="d-flex align-items-center justify-content-end gap-2">
-                                        <button class="btn btn-warning mr-2">
+                                        <button class="btn btn-warning mr-2" id="clearResourceFields">
                                             <i class="fas fa-trash mr-1"></i><span>Clear</span>
                                         </button>
-                                        <button class="btn btn-primary">
+                                        <button class="btn btn-primary" id="resourceAddBtn">
                                             <i class="fas fa-plus mr-1"></i><span>Add</span>
                                         </button>
                                     </div>
@@ -178,8 +196,8 @@
                             </div>
 
                             <div class="row my-2">
-                                <div class="col-12">
-                                    <div class="card">
+                                <div class="col-12 mt-3">
+                                    <div class="card" id="resources-card">
                                         <div class="card-header">
                                             <span class="text-sm">Uploaded Resources</span>
                                         </div>
@@ -196,6 +214,8 @@
                                                 </thead>
                                                 <tbody></tbody>
                                             </table>
+                                            <span class="my-1 text-danger font-weight-normal"
+                                                id="resourcesErrContainer"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +229,7 @@
                             <button class="btn btn-secondary mr-2" id="cancelBtn">
                                 <i class="fas fa-close mr-1"></i><span>Cancel</span>
                             </button>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" id="btnSave">
                                 <i class="fas fa-save mr-1"></i><span>Save</span>
                             </button>
                         </div>

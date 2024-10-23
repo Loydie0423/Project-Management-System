@@ -10,8 +10,16 @@ class ProjectHelper
 
     public function generateProjectCode(string $categoryName)
     {
+        $projectInitial = '';
+        for ($i = 0; $i <= (strlen($categoryName) - 1); $i++) {
+            if ($i == 0) {
+                $projectInitial .= $categoryName[0];
+            }
 
-        $projectInitial = $categoryName[0];
+            if (in_array($categoryName[$i], [' ', " "])) {
+                $projectInitial .= $categoryName[($i + 1)] ?? '';
+            }
+        }
         $category = ProjectCategory::where('name', $categoryName)->first();
         $categoryId = (int) $category->id + 1;
         $projectCode = $projectInitial . "-" . $this->generateUniqueCode($categoryId);
