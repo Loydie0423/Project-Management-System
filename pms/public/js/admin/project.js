@@ -201,7 +201,8 @@ $(document).ready(function() {
         }
         requiredFields.forEach((fieldID) => {
             if($(`#${fieldID}`).val() == null || $(`#${fieldID}`).val() == ""){
-                resourceError.push({key : fieldID ,message : `The ${fieldID} field is required`} );
+                let newMessage = changeResourcesValidationMessage(fieldID);
+                resourceError.push({key : fieldID ,message : newMessage} );
             }
         })
         requiredFields.forEach((item) => {
@@ -397,3 +398,16 @@ function changeValidationMessage(field){
 
     return newMessage;
 }
+
+function changeResourcesValidationMessage(field){
+    let newMessage = null;
+    switch(field){
+        case "type" : newMessage = "The type field is required"; break;
+        case "resourceTitle" : newMessage = "The title field is required"; break;
+        case "resourceImage" : newMessage = "The image field is required"; break;
+        case "resourceLink": newMessage = "The link field is required"; break;
+    }
+
+    return newMessage;
+}
+
