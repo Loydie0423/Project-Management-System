@@ -257,7 +257,7 @@ $(document).ready(function() {
             if(item.username == selectedData.username){
                 Swal.fire({
                     title : "Warning!",
-                    text : `${item.first_name} ${item.last_name} already in the table`,
+                    text : `${item.first_name} ${item.last_name} is already in the table`,
                     icon : 'warning'
                 });
                 return 1;
@@ -314,7 +314,7 @@ $(document).ready(function() {
         });
 
         if(!collaborators.length > 0){
-            errors.push({field : "collaborators", message : "Select atleast one collaborator."})
+            errors.push({field : "collaborators", message : "Atleast one collaborator is required."})
         }
         if(!resources.length > 0){
             errors.push({field : "resources", message : "Upload atleast one resources."})
@@ -340,6 +340,12 @@ $(document).ready(function() {
                     messageWithIcon = `<i class='fa-solid fa-circle-exclamation mr-1'></i>${item.message}`;
                     $("#resourcesErrContainer").html(messageWithIcon);
                 }
+            });
+
+            Swal.fire({
+                title : "Validation Error!",
+                text : "Check all required data",
+                icon : "warning"
             });
             return "Validation Error";
         }
