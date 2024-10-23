@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/datatable/project', [ProjectController::class, 'projectDataTable'])->name('admin.datatable.project');
         Route::get('/project/add', [ProjectController::class, 'create'])->name('admin.project.create');
         Route::get('/datatable/collaborator/selection', [ProjectController::class, 'collaboratorSelectionDataTable'])->name('admin.datatable.collaborator.selection');
+        Route::post('project/generate/{categoryId}/projectCode', [ProjectController::class, 'generateProjectCode'])->name('admin.project.generate.projectCode');
     });
 
     Route::group(['middleware' => 'user'], function () {

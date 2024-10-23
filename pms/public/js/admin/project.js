@@ -2,36 +2,6 @@ $(document).ready(function() {
     $("#category_id").select2();
     $("#resources_type").select2();
 
-    $("#resources_type").change(function() {
-        let selectedType = $("#resources_type :selected").val();
-        let addProjectUploadImageContainer = $("#addProjectUploadImageContainer");
-        let addProjectLinkContainer = $("#addProjectLinkContainer");
-
-        if (selectedType == "Link") {
-            addProjectLinkContainer.removeClass("d-none").addClass("d-block");
-            addProjectUploadImageContainer.removeClass("d-block").addClass("d-none");
-        } else if (selectedType == "Image") {
-            addProjectUploadImageContainer.removeClass("d-none").addClass("d-block");
-            addProjectLinkContainer.removeClass("d-block").addClass("d-none");
-        }
-    });
-
-    $("#cancelBtn").on('click', function() {
-
-        Swal.fire({
-            title : "Warning",
-            text : "Are you sure you want to cancel? All data will be erase?",
-            icon : "warning",
-            showCancelButton : true,
-            confirmButtonText : "Yes, Cancel it"
-        }).then((result) => {
-            if(result.isConfirmed){
-                window.location = "/admin/project";
-            }
-        });
-
-    });
-
     let projectDataTable = $("#projectDataTable").DataTable({
         processing : true,
         serverSide: true,
@@ -143,7 +113,9 @@ $(document).ready(function() {
             },
             {
                 name : "action",
-                data : "action"
+                data : function() {
+                    return "<button class='btn btn-sm btn-danger' id='btnRemoveCollaborator'><i class='fas fa-trash'></i></button>"
+                }
             }
         ],
         columnDefs : [
@@ -185,6 +157,93 @@ $(document).ready(function() {
             }
         ]
     });
+
+    $("#resources_type").change(function() {
+        let selectedType = $("#resources_type :selected").val();
+        let addProjectUploadImageContainer = $("#addProjectUploadImageContainer");
+        let addProjectLinkContainer = $("#addProjectLinkContainer");
+
+        if (selectedType == "Link") {
+            addProjectLinkContainer.removeClass("d-none").addClass("d-block");
+            addProjectUploadImageContainer.removeClass("d-block").addClass("d-none");
+        } else if (selectedType == "Image") {
+            addProjectUploadImageContainer.removeClass("d-none").addClass("d-block");
+            addProjectLinkContainer.removeClass("d-block").addClass("d-none");
+        }
+    });
+
+    $("#cancelBtn").on('click', function() {
+
+        Swal.fire({
+            title : "Warning",
+            text : "Are you sure you want to cancel? All data will be erase?",
+            icon : "warning",
+            showCancelButton : true,
+            confirmButtonText : "Yes, Cancel it"
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location = "/admin/project";
+            }
+        });
+
+    });
+
+    $("#category_id").on('change', function() {
+        let categoryId = $(this).val();
+        let url = `/admin/project/generate/${categoryId}/projectCode`;
+        let token = $("meta[title='token']").attr('content');
+        $.ajax({
+            url :url,
+            method : "POST",
+            headers : {
+                'X-CSRF-TOKEN' : token
+            },
+            data : {
+                categoryId : categoryId
+            },
+            success : function (response) {
+                let projectCode = $("#projectCode");
+                projectCode.val(response.data.projectCode);
+            },
+            error : function(error){
+                let message = error.responseJSON.message;
+
+                Swal.fire({
+                    title : "Warning!",
+                    text : message,
+                    icon : "warning"
+                });
+            }
+        });
+    })
+
+    $("#collaboratorsTableSelection tbody").on('click', '#btnSelectCollab', function() {
+        let selectedData = collaboratorsTableSelection.row($(this).closest('tr')).data();
+        let validator = $.map(selectedCollaboratorsTable.rows().data(), function(item){
+            if(item.username == selectedData.username){
+                Swal.fire({
+                    title : "Warning!",
+                    text : `${item.first_name} ${item.last_name} already in the table`,
+                    icon : 'warning'
+                });
+                return 1;
+            }
+        });
+
+        if(validator == 1){
+            return validator;
+        }
+        selectedCollaboratorsTable.row.add(selectedData).draw();
+    });
+
+    $("#selectedCollaboratorsTable tbody").on('click', '#btnRemoveCollaborator', function() {
+        let selectedDataIndex = selectedCollaboratorsTable.row($(this).closest('tr')).index();
+        selectedCollaboratorsTable.row(selectedDataIndex).remove().draw();
+    })
+
+
+
+    
 
    
 });

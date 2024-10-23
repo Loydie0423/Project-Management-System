@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-6">
                                     <label>Project Code</label>
-                                    <input type="text" name="code" id="code" class="form-control" readonly>
+                                    <input type="text" name="code" id="projectCode" class="form-control" readonly>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-6">
                                     <label>Title</label>
@@ -117,7 +117,7 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody></tbody>
+                                                <tbody id="selectedCollaboratorsTableBody"></tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -177,20 +177,27 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row my-2">
                                 <div class="col-12">
-                                    <table class="table table-bordered" id="resourcesTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Title</th>
-                                                <th>Content</th>
-                                                <th>Description</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-sm">Uploaded Resources</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="resourcesTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <th>Title</th>
+                                                        <th>Content</th>
+                                                        <th>Description</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

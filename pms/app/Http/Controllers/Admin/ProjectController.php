@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\ProjectHelper;
 use App\Http\Controllers\Controller;
+use App\Http\HttpResponse\JsonResponse;
 use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Models\User;
@@ -11,6 +13,16 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProjectController extends Controller
 {
+
+    private ProjectHelper $projectHelper;
+    private JsonResponse $jsonResponse;
+
+    public function __construct()
+    {
+        $this->projectHelper = new ProjectHelper();
+        $this->jsonResponse = new JsonResponse();
+    }
+
     public function index()
     {
         return view('admin.project.index');
@@ -51,10 +63,23 @@ class ProjectController extends Controller
                     return (string) $user->first_name . " " . $user->last_name;
                 })
                 ->addColumn('action', function ($user) {
-                    return "<button class='btn btn-sm btn-primary font-weight-bold'>Select</button>";
+                    return "<button class='btn btn-sm btn-primary font-weight-bold' id='btnSelectCollab'>Select</button>";
                 })
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
     }
+    public function generateProjectCode(string $categoryId, Request $request)
+    {
+        try {
+            $category = ProjectCategory::findOrFail($categoryId ?? $request->categoryId);
+            $categoryName = $category->name;
+            $projectCode = $this->projectHelper->generateProjectCode($categoryName);
+            return $this->jsonResponse->successJsonResponse(data: ['projectCode' => $projectCode]);
+        } catch (\Throwable $th) {
+            return $this->jsonResponse->serverErrorJsonResponse(message: $th->getMessage());
+        }
+    }
+
+
 }
