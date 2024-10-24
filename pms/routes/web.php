@@ -53,6 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/datatable/collaborator/selection', [ProjectController::class, 'collaboratorSelectionDataTable'])->name('admin.datatable.collaborator.selection');
         Route::post('project/generate/{categoryId}/projectCode', [ProjectController::class, 'generateProjectCode'])->name('admin.project.generate.projectCode');
         Route::post('/project/add', [ProjectController::class, 'store'])->name('admin.project.store');
+        Route::get('/project/{project}/view', [ProjectController::class, 'show'])->name('admin.project.show');
+        Route::get('/datatable/project/{project}/view/task', [ProjectController::class, 'viewProjectTaskDataTable'])->name('admin.datatable.project.show.task');
+        Route::get('/datatable/project/{project}/view/collaborators', [ProjectController::class, 'viewProjectCollaboratorsDataTable'])->name('admin.datatable.project.show.collaborators');
+        Route::get('/datatable/project/{project}/view/resources', [ProjectController::class, 'viewProjectResourcesDataTable'])->name('admin.datatable.project.show.resources');
     });
 
     Route::group(['middleware' => 'user'], function () {

@@ -10,6 +10,7 @@ use App\Models\ProjectCategory;
 use App\Models\ProjectCollaborator;
 use App\Models\ProjectResources;
 use App\Models\ProjectUpdate;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,11 +39,14 @@ class ProjectController extends Controller
     {
         if ($request->ajax()) {
             $data = Project::with(['category', 'collaborators', 'updates'])->withCount('collaborators')->get();
-
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('datetime_span', function ($project) {
-                    return (string) $project->start_datetime . " to " . $project->end_datetime;
+                    $isExceeded = $this->projectHelper->checkIfEstimatedEndDateIsExceeded($project->end_datetime);
+                    if ($isExceeded) {
+                        return "<p class='badge badge-danger'>$project->start_datetime to $project->end_datetime</p>";
+                    }
+                    return "<p class='badge badge-primary'>$project->start_datetime to $project->end_datetime</p>";
                 })
                 ->addColumn('last_update', function ($project) {
                     if (!($project->updates->count()) > 0) {
@@ -51,10 +55,37 @@ class ProjectController extends Controller
                     $lastUpdate = ProjectUpdate::where('project_id', $project->id)->orderBy('id', 'DESC')->first();
                     return (string) $lastUpdate->status . " [" . $lastUpdate->update_code . "]";
                 })
-                ->addColumn('action', function () {
-                    return "wew";
+                ->addColumn('current_status', function ($project) {
+                    $html = "";
+                    switch ($project->current_status) {
+                        case "On-Going":
+                            $html .= "<p class='badge badge-primary'>On-Going<p>";
+                            break;
+                        case "Completed":
+                            $html .= "<p class='badge badge-success'>Completed<p>";
+                            break;
+                        default:
+                            $html .= "<p class='badge badge-dark'>$project->status<p>";
+                    }
+                    return $html;
                 })
-                ->rawColumns(['datetime_span'])
+                ->addColumn('action', function ($project) {
+                    $viewProjectRoute = route('admin.project.show', $project);
+                    return "<div class='dropdown dropleft'>
+                                <button class='btn btn-sm btn-dark dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    <i class='fas fa-cog'></i>
+                                </button>
+                                <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+                                    <a class='dropdown-item' href='$viewProjectRoute'>View</a>
+                                    <a class='dropdown-item' href='#'>Edit Details</a>
+                                    <a class='dropdown-item' href='#'>Manage Collaborators</a>
+                                    <a class='dropdown-item' href='#'>Manage Resources</a>
+                                    <a class='dropdown-item' href='#'>Publish Announcement</a>
+                                    <a class='dropdown-item' href='#'>Update Status</a>
+                                </div>
+                            </div>";
+                })
+                ->rawColumns(['datetime_span', 'current_status', 'last_update', 'action'])
                 ->make(true);
         }
     }
@@ -170,6 +201,72 @@ class ProjectController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->jsonResponse->serverErrorJsonResponse(message: $th->getMessage());
+        }
+    }
+
+    public function show(Project $project)
+    {
+        $project->load(['category', 'tasks', 'collaborators', 'resources', 'announcements', 'updates', 'manager']);
+        return view('admin.project.show', compact('project'));
+    }
+
+    public function viewProjectTaskDataTable(Request $request, string|int $projectId)
+    {
+        if ($request->ajax()) {
+            $tasks = Task::with(['collaborators'])->withCount('collaborators')->where('project_id', $projectId)->orderBy('id', 'DESC')->get();
+
+            return DataTables::of($tasks)
+                ->addIndexColumn()
+                ->addColumn('date_span', function ($task) {
+                    return (string) $task->start_datetime . " to " . $task->end_datetime;
+                })
+                ->addColumn('time_spent', function ($task) {
+                    return "<p class='badge badge-danger'>pending ticket</p>";
+                })
+                ->addColumn('action', function () {
+                    return "wew";
+                })
+                ->rawColumns(['date_span', 'action'])
+                ->make(true);
+        }
+    }
+
+    public function viewProjectCollaboratorsDataTable(Request $request, string|int $projectId)
+    {
+        if ($request->ajax()) {
+            $collaborators = ProjectCollaborator::with(['user', 'user.role'])->where('project_id', $projectId)->orderBy('role', 'ASC')->get();
+
+            return DataTables::of($collaborators)
+                ->addIndexColumn()
+                ->addColumn('user', function ($collaborator) {
+                    return $collaborator->user->first_name . " " . $collaborator->user->last_name;
+                })
+                ->addColumn('email', function ($collaborator) {
+                    return $collaborator->user->email;
+                })
+                ->rawColumns(['user', 'email', 'user_role'])
+                ->make(true);
+        }
+    }
+
+    public function viewProjectResourcesDataTable(Request $request, string|int $projectId)
+    {
+        if ($request->ajax()) {
+            $resources = ProjectResources::where('project_id', $projectId)->orderBy('id', 'DESC')->get();
+
+            return DataTables::of($resources)
+                ->addIndexColumn()
+                ->addColumn('content', function ($resource) {
+
+                    if (in_array($resource->type, ['link', 'Link'])) {
+                        $link = $resource->link;
+                        return "<a class='font-weight-normal text-link text-primary text-underline' href='$link' target='_blank'>$link</a>";
+                    }
+
+                    //show image if type is image
+                })
+                ->rawColumns(['content'])
+                ->make(true);
         }
     }
 

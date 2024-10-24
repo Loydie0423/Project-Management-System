@@ -3,6 +3,9 @@
 namespace App\Helper;
 
 use App\Models\ProjectCategory;
+use Carbon\Carbon;
+use Date;
+use DateTime;
 use Illuminate\Support\Str;
 
 class ProjectHelper
@@ -44,6 +47,16 @@ class ProjectHelper
         }
 
         return $generatedCode;
+    }
+
+    public function checkIfEstimatedEndDateIsExceeded(string $endDate): bool
+    {
+        $dateNow = new DateTime();
+        $endDate = new DateTime($endDate);
+        if ($dateNow > $endDate) {
+            return true;
+        }
+        return false;
     }
 
 

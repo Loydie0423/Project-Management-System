@@ -150,8 +150,8 @@
                                 <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>Type</label>
                                     <select name="resources_type" id="resourceType" class="form-control">
-                                        <option value="Image">Image</option>
-                                        <option value="Link">Link</option>
+                                        <option value="image">Image</option>
+                                        <option value="link">Link</option>
                                     </select>
                                     <span class="text-danger"></span>
                                 </div>
@@ -242,6 +242,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
 
 
     <script src="{{ asset('js/admin/project.js') }}"></script>

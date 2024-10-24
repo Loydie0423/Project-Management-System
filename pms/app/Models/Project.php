@@ -27,7 +27,7 @@ class Project extends Model
     public function startDateTime(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => date('F d, Y H:i:s A', strtotime($value))
+            get: fn($value) => date('F d, Y', strtotime($value))
         );
     }
 
@@ -55,8 +55,28 @@ class Project extends Model
         return $this->hasMany(ProjectCollaborator::class, 'project_id');
     }
 
+    public function resources(): HasMany
+    {
+        return $this->hasMany(ProjectResources::class, 'project_id');
+    }
+
     public function updates(): HasMany
     {
         return $this->hasMany(ProjectUpdate::class);
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(ProjectAnnouncement::class, 'project_id');
+    }
+
+    public function manager(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'manager_id');
     }
 }

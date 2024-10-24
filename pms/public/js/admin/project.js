@@ -367,6 +367,8 @@ $(document).ready(function() {
         submit(collaborators, resources);
     });
 
+   
+
 
 });
 
@@ -398,6 +400,7 @@ function generateProjectCode()
                 });
             }
         });
+        
 }
 
 function isEmpty(field){
@@ -543,4 +546,5 @@ function submit(collaborators = [], resources = []){
         }
     });
 }
+
 
