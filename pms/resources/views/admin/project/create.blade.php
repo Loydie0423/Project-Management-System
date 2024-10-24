@@ -63,7 +63,7 @@
                                 <div class="col col-md-2 col-lg-2 col-sm-6">
                                     <label>End Date and Time [<span
                                             class="text-info font-weight-bold">Estimated</span>]</label>
-                                    <input type="date" name="start_date_time" id="end_date_time" class="form-control">
+                                    <input type="date" name="end_date_time" id="end_date_time" class="form-control">
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -100,6 +100,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Action</th>
+                                                        <th>ID</th>
                                                         <th>Username</th>
                                                         <th>Name</th>
                                                         <th>Role</th>
@@ -121,6 +122,7 @@
                                             <table class="table table-bordered" id="selectedCollaboratorsTable">
                                                 <thead>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Username</th>
                                                         <th>Name</th>
                                                         <th>Role</th>
@@ -240,6 +242,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
 
     <script src="{{ asset('js/admin/project.js') }}"></script>
 @endsection

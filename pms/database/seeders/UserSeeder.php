@@ -14,14 +14,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'role_id' => 1,
-            'first_name' => fake()->firstName(),
-            'last_name' => fake()->lastName(),
-            'gender' => fake()->randomElement(['Male', 'Female']),
-            'email' => fake()->safeEmail(),
-            'username' => fake()->userName(),
-            'password' => Hash::make('password')
-        ]);
+        for ($i = 0; $i <= 10; $i++) {
+            User::create([
+                'role_id' => 1,
+                'first_name' => fake()->firstName(),
+                'last_name' => fake()->lastName(),
+                'gender' => fake()->randomElement(['Male', 'Female']),
+                'email' => fake()->safeEmail(),
+                'username' => fake()->userName(),
+                'password' => Hash::make('password')
+            ]);
+        }
     }
 }

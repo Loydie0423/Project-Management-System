@@ -68,6 +68,10 @@ $(document).ready(function() {
                 data : "action"
             },
             {
+                name : "id",
+                data : "id"
+            },
+            {
                 name : "username",
                 data : "username"
             },
@@ -92,9 +96,13 @@ $(document).ready(function() {
         ]
     });
 
-    var selectedCollaboratorsTable = $("#selectedCollaboratorsTable").DataTable({
+    let selectedCollaboratorsTable = $("#selectedCollaboratorsTable").DataTable({
         searching : false,
         columns : [
+            {
+                name : "id",
+                data : "id"
+            },
             {
                 name : "username",
                 data : "username"
@@ -126,7 +134,7 @@ $(document).ready(function() {
         ]
     });
 
-    var resourcesTable = $("#resourcesTable").DataTable({
+    let resourcesTable = $("#resourcesTable").DataTable({
         searching : false,
         columns : [
             {
@@ -355,8 +363,8 @@ $(document).ready(function() {
             });
             return "Validation Error";
         }
-
-        //to be continued submission of data to server
+        
+        submit(collaborators, resources);
     });
 
 
@@ -421,5 +429,118 @@ function changeResourcesValidationMessage(field){
     }
 
     return newMessage;
+}
+
+function submit(collaborators = [], resources = []){
+    let category_id = $('#category_id').val(); 
+    let projectCode = $('#projectCode').val();
+    let title = $('#title').val(); 
+    let project_description = $("#project_description").val(); 
+    let start_date_time = $('#start_date_time').val(); 
+    let end_date_time = $('#end_date_time').val();
+    let readme = $('#readme').val(); 
+    let url = '/admin/project/add';
+    let token = $("meta[title='token']").attr('content');
+
+    $.ajax({
+        url : url,
+        method : 'POST',
+        headers : {
+            'X-CSRF-TOKEN' : token
+        },
+        data : {
+            category_id : category_id,
+            projectCode : projectCode,
+            title : title,
+            project_description : project_description,
+            start_date_time : start_date_time,
+            end_date_time : end_date_time,
+            readme : readme,
+            collaborators : collaborators,
+            resources : resources
+        },
+        success : function(response) {
+            let message = response.message;
+            console.log(response)
+            Swal.fire({
+                title : "Success",
+                text : message,
+                icon : "success"
+            });
+
+            window.location = '/admin/project';
+        },
+        error : function(error) {
+            console.log();
+
+            let errors = error.responseJSON.errors ?? [];
+            let status = error.status;
+            let message = error.responseJSON.message ?? "";
+
+            let requiredFields = [
+                'category_id' ,
+                'projectCode',
+                'title', 
+                'project_description', 
+                'start_date_time',
+                'end_date_time',
+                'readme',
+                'collaborators',
+                'resources'
+            ];
+
+            requiredFields.forEach((item) => {
+                $(`#${item}`).removeClass("is-invalid");
+                $(`#${item}`).closest('.col').find('.text-danger').text("");
+
+                if(item == "collaborators"){
+                    $("#selected-collaborator-card").removeClass('border');
+                    $("#selected-collaborator-card").removeClass('border-danger');
+                    $("#selectedCollaboratorErrContainer").html("");
+                }
+
+                if(item == "resources"){
+                    $("#resources-card").removeClass('border');
+                    $("#resources-card").removeClass('border-danger');
+                    $("#resourcesErrContainer").html("");
+                }
+            });
+
+            if(status == 422){
+                Object.entries(errors).forEach((item, fieldId) => {
+                    $(`#${item[0]}`).addClass("is-invalid");
+                    $(`#${item[0]}`).closest('.col').find('.text-danger').text(item[1]);
+                    let messageWithIcon = null;
+                    if(item[0] == "collaborators"){
+                        $("#selected-collaborator-card").addClass('border');
+                        $("#selected-collaborator-card").addClass('border-danger');
+                        messageWithIcon = `<i class='fa-solid fa-circle-exclamation mr-1'></i>${item[1]}`; 
+                        $("#selectedCollaboratorErrContainer").html(messageWithIcon);
+                    }
+    
+                    if(item[0] == "resources"){
+                        $("#resources-card").addClass('border');
+                        $("#resources-card").addClass('border-danger');
+                        messageWithIcon = `<i class='fa-solid fa-circle-exclamation mr-1'></i>${item[1]}`;
+                        $("#resourcesErrContainer").html(messageWithIcon);
+                    }
+                })
+
+                Swal.fire({
+                    title : "Validation Error!",
+                    text : "Check all required data",
+                    icon : "warning"
+                });
+            }
+
+            if(status == 500){
+                Swal.fire({
+                    title : "Server Error!",
+                    text : message,
+                    icon : "error"
+                });
+            }
+        }
+    });
 }
 

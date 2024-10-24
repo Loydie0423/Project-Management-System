@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('code')->unique();
             $table->string('title');
             $table->string('description');
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
+            $table->date('start_datetime');
+            $table->date('end_datetime');
             $table->string('current_status');
             $table->string('readme')->nullable();
             $table->timestamps();
